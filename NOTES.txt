@@ -1,0 +1,113 @@
+
+npm init
+
+npm install --save express jade
+
+git init
+
+- Create empty new project from current directory within WebStorm. Add source when prompted.
+- Add .gitignore file to project folder via WebStorm
+
+git status
+
+- Add files to git but ignore the following (normally might want to include node_modules directory to self-contain all deps):
+  .idea
+  node_modules
+
+ 
+npm install bower -g
+
+or
+
+npm install bower --save-dev
+
+
+- Create server and public directories
+- server directory will hold client-side partials and jade views since node.js needs to process jade along with the client-side views.
+- public will contain all other client-side deps.
+
+
+- create .bowerrc file
+
+- { "directory" : "public/vendor" }
+
+- bower init
+
+- bower install jquery --save
+
+- bower install toaster --save
+
+- bower install angular angular-resource angular-route --save
+
+Alternatively, you can include the following within a bower.json
+file and run `bower install`:
+{
+  "name": "MultiVision",
+  "version": "0.0.0",
+  "authors": [
+    "rsingh <raigsingh@gmail.com>"
+  ],
+  "description": "Extreme Tech Training",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "toastr": "~2.0.3",
+    "angular": "~1.2.20",
+    "angular-resource": "~1.2.20",
+    "angular-route": "~1.2.20"
+  }
+}
+
+- Create server.js
+
+- Setup WebStorm to fix errors within IDE:
+    - Settings=>Inspections=>JavaScript=>General=>(Uncheck 'Signature mismatch', 'Unresolved JavaScript function' and 'Unresolved     JavaScript variable')
+
+
+`bower info <package>` will provide a list of available versions.
+Specify that version within the bower.json file.
+
+- install jade globally so that you can add server/views/index.jade watcher from within WebStorm.
+
+npm install jade -g
+
+npm install nodemon -g
+
+nodemon server.js
+
+
+Stopped at "Adding Stylus" 1:40/2:53
+
+npm install stylus morgan body-parser --save
+
+...Skipped a bunch of steps...
+
+How to deploy to Heroku:
+
+1) Add all files to git
+
+    git add -A
+    git commit -m 'Ready to deploy to Heroku'
+
+2) Login to Heroku and create the app:
+
+   heroku login
+   heroku create // this will add heroku remote to git
+
+3) Setup NODE_ENV environment variable and push changes to heroku remote
+   
+   heroku config:set NODE_ENV=production
+   git push heroku master // this will deploy without any resources to run it
+
+4) Allocate some resources (dynos) to run the application
+
+   heroku ps:scale web=1
+
+5) Open the web application in the default browser
+
+   heroko open
+
+6) Check logs
+
+   heroku logs

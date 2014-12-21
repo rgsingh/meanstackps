@@ -1,0 +1,10 @@
+.container
+    .jumbotron
+        h1 MultiVision {{ myVar }}
+        p Welcome to MultiVision. The premier choice in cyborg eyecare. Who woulda thunk dat dis kinda technology existed?
+
+    .row
+        .col-md-6
+            div(ng-include="'/partials/featured-courses'")
+        .col-md-6
+            div(ng-include="'/partials/new-courses'")

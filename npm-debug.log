@@ -1,0 +1,26 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/local/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'remove',
+1 verbose cli   'stylus',
+1 verbose cli   '-g' ]
+2 info using npm@1.4.28
+3 info using node@v0.10.33
+4 verbose lib/node_modules/stylus unbuild
+5 info preuninstall stylus@0.49.3
+6 info uninstall stylus@0.49.3
+7 verbose true,/usr/local/lib/node_modules,/usr/local/lib/node_modules unbuild stylus@0.49.3
+8 verbose /usr/local/bin,[object Object] binRoot
+9 error Error: EACCES, unlink '/usr/local/bin/stylus'
+9 error  { [Error: EACCES, unlink '/usr/local/bin/stylus'] errno: 3, code: 'EACCES', path: '/usr/local/bin/stylus' }
+10 error Please try running this command again as root/Administrator.
+11 error System Linux 3.2.0-4-amd64
+12 error command "/usr/local/bin/node" "/usr/local/bin/npm" "remove" "stylus" "-g"
+13 error cwd /home/rsingh/Development/code/pluralsight/meanstackps
+14 error node -v v0.10.33
+15 error npm -v 1.4.28
+16 error path /usr/local/bin/stylus
+17 error code EACCES
+18 error errno 3
+19 error stack Error: EACCES, unlink '/usr/local/bin/stylus'
+20 verbose exit [ 3, true ]
