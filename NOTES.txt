@@ -83,6 +83,22 @@ npm install stylus morgan body-parser --save
 
 ...Skipped a bunch of steps...
 
+- Check versions of node and npm (i.e. node --version and npm --version)
+- Add "engines" section to package.json
+
+
+  "engines": {
+    "node": "0.10.x",
+    "npm": "1.4.x"
+  }
+
+- Create Procfile in root of project which tells heroku how to run the node application
+- Include a reference to process.env.PORT to indicate the port to listen to requests on.
+- Test that the application can be run in production by setting NODE_ENV environment variable
+ to anything other than the string value of "development".
+
+    Linux : export NODE_ENV=production
+
 How to deploy to Heroku:
 
 1) Add all files to git
