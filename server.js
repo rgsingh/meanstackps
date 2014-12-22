@@ -140,7 +140,9 @@ app.get('/partials/:partialPath', function(req, res) {
 app.get('*', function(req, res) {
     res.render('index', {
 //        Comment out the message injected into the view
-        mongoMessage: mongoMessage
+        //mongoMessage: mongoMessage
+        mongoMessage: 'A simple test'
+
     });
 })
 
