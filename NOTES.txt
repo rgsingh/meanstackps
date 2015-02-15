@@ -127,3 +127,11 @@ How to deploy to Heroku:
 6) Check logs
 
    heroku logs
+
+
+- Add sample data to populate main view divs. 
+- Add nav bar login and  controller for nav bar login
+- Refactor express server.js by separating out each logical part of the application into its own file.
+- Safely declare variables to each controller function such that each function parameter retains its implicit name after code obfuscation.
+
+

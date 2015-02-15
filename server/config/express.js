@@ -2,7 +2,10 @@
 var express = require('express'),
     logger = require('morgan'),
     bodyParser = require('body-parser'),
-    stylus = require('stylus');
+    stylus = require('stylus'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
+    passport = require('passport');
 
 module.exports = function(app, config) {
     // Used by stylus middleware
@@ -15,12 +18,24 @@ module.exports = function(app, config) {
     // Turn on express logging and bodyParser
     app.use(logger('dev'));
 
+    app.use(cookieParser());
+
     //app.use(bodyParser()); // deprecated
     app.use(bodyParser.urlencoded({
         extended: true
     }));
     app.use(bodyParser.json());
 
+    app.use(session(
+        {
+            secret:'multi vision unicorns',
+            resave:true,
+            saveUninitialized:true
+        }
+    ));
+
+    app.use(passport.initialize());
+    app.use(passport.session());
 
     // Stylus middleware referencing the compile function
     app.use(stylus.middleware(

@@ -1,5 +1,6 @@
 
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    crypto = require('crypto');
 
 module.exports = function(config){
 
@@ -11,51 +12,38 @@ module.exports = function(config){
         console.log('multivision db opened.');
     });
 
-    var MessageSchema = mongoose.Schema({
-        _id: Number,
-        message : String,
-        messageDetail: String
+    var userSchema = mongoose.Schema({
+        firstname : String,
+        lastname: String,
+        username: String,
+        salt: String,
+        hashed_pwd: String
     });
 
-    MessageSchema.methods.findByDetail = function findByDetail(message) {
-        return this.model('Message').find({messageDetail: this.messageDetail}, message);
-    };
+    var User = mongoose.model('User', userSchema);
 
-    var Message = mongoose.model('Message', MessageSchema);
-
-    var mainMessage = new Message({
-        _id: 123,
-        message: 'This is a also yet another test',
-        messageDetail: 'Specifically, this test is to demonstrate retrieval of data from MongoDB.'
-    });
-
-// Find an entry that matches 'Specifically, this test is to demonstrate retrieval of data from MongoDB.'
-    mainMessage.findByDetail(function (err, specificMessage) {
-        if (err) throw err
-
-        //Prepare data to be inserted or updated
-        var upsertMessage = mainMessage.toObject();
-
-        // We cannot update the _id field onto an existing record so remove it.
-        delete upsertMessage._id;
-
-        // Update the field that matches by _id only. Otherwise, insert a new record
-        Message.update({_id: mainMessage._id}, upsertMessage, {upsert: true}, function(err){
-            if (err) throw err;
-
-            // Make sure it was inserted by retrieving it from the DB.
-            Message.findOne().exec(function(err, messageDoc){
-                if (err) throw err;
-
-                specificMessage.message  = "(Upsert completed for " + messageDoc._id + " ) "  + messageDoc.message,
-                    specificMessage.messageDetail = messageDoc.messageDetail;
-            });
-
-        });
-
-        // update the globals...not elegant, but okay for this tutorial...Angular services would be best. Globals suck.
-        mongoMessage = specificMessage.message;
-        mongoMessageDetail = specificMessage.messageDetail;
+    User.find({}).exec(function(err, collection){
+        if (collection.length === 0) {
+            var salt, hash;
+            salt = createSalt();
+            hash = hashPwd(salt, 'tstark');
+            User.create({firstname: 'Tony', lastname: 'Stark', username: 'tstark', salt: salt, hashed_pwd: hash})
+            salt = createSalt();
+            hash = hashPwd(salt, 'ckent');
+            User.create({firstname: 'Clark', lastname: 'Kent', username: 'ckent', salt: salt, hashed_pwd: hash})
+            salt = createSalt();
+            hash = hashPwd(salt, 'smash');
+            User.create({firstname: 'Bruce', lastname: 'Banner', username: 'smash', salt: salt, hashed_pwd: hash})
+        }
     })
 
+}
+
+function createSalt() {
+    return crypto.randomBytes(128).toString('base64');
+}
+
+function hashPwd(salt, pwd) {
+    var hmac = crypto.createHmac('sha1', salt);
+    return hmac.update(pwd).digest('hex');
 }
